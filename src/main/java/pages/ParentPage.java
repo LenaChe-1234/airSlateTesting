@@ -4,6 +4,7 @@ import libs.ConfigProperties;
 import org.aeonbits.owner.ConfigFactory;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
@@ -35,6 +36,7 @@ public abstract class ParentPage {
     }
 
     abstract String getRelativeUrl ();
+    abstract String getFirstPartOfRelativeUrl();
 
     private void printErrorMessageAndStopTest(Exception e) {
         logger.error("Can not work with element " + e);
@@ -96,5 +98,6 @@ public abstract class ParentPage {
             printErrorMessageAndStopTest(e);
         }
     }
+
 
 }
