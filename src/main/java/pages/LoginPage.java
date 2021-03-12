@@ -1,5 +1,7 @@
 package pages;
 
+import io.qameta.allure.Step;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -47,6 +49,7 @@ public class LoginPage extends ParentPage{
         return "my.";
     }
 
+    @Step
     public LoginPage openLoginPage(){
         try {
             //webDriver.get(loginPageUrl);
@@ -61,29 +64,34 @@ public class LoginPage extends ParentPage{
         return this;
     }
 
+    @Step
     public LoginPage enterUserEmail(String userEmail) {
         webDriverWait10.until(ExpectedConditions.elementToBeClickable(inputUserEmail));
         enterTextIntoElement(inputUserEmail, userEmail);
         return this;
     }
 
+    @Step
     public LoginPage enterUserPass(String userPass) {
         webDriverWait10.until(ExpectedConditions.elementToBeClickable(inputUserPass));
         enterTextIntoElement(inputUserPass, userPass);
         return this;
     }
 
+    @Step
     public LoginPage clickEyeButton() {
         clickOnElement(buttonEye);
         return this;
     }
 
 
+    @Step
     public void clickButtonLogIn() {
         clickOnElement(buttonLogIn);
     }
 
 
+    @Step
     public DomainSelectPage loginWithValidData(String userEmail, String userPass){
         openLoginPage();
         enterUserEmail(userEmail);
@@ -93,12 +101,14 @@ public class LoginPage extends ParentPage{
         return new DomainSelectPage(webDriver);
     }
 
+    @Step
     public LoginPage waitTillLoginPageIsLoaded(){
         webDriverWait15.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//*[@role = 'presentation']")));
         return this;
     }
 
 
+    @Step
     public LoginPage loginWithInvalidEmail(String invalidUserEmail, String userPass) {
         openLoginPage();
         enterUserEmail(invalidUserEmail);
@@ -109,6 +119,7 @@ public class LoginPage extends ParentPage{
     }
 
 
+    @Step
     public String getErrorMessageText(){
         WebElement error = webDriver.findElement((By) errorMessageEmail);
         String textOfError = error.getText();
@@ -116,16 +127,19 @@ public class LoginPage extends ParentPage{
         return textOfError;
     }
 
+    @Step
     public LoginPage waitTillErrorWillDisplayed(){
         webDriverWait15.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//*[@type = 'error']")));
        return this;
     }
 
+    @Step
     public LoginPage checkIsRedirectedToLoginPage(){
         Assert.assertEquals("Wrong Page url " ,loginPageUrl,webDriver.getCurrentUrl());
         return this;
     }
 
+    @Step
     public int numberOfErrorMessageWereDisplayed (){
         visibilityOfAllElementsLocatedBy(By.xpath(".//*[@type = 'error']"));
         List<WebElement> list = new ArrayList<>();
@@ -135,4 +149,26 @@ public class LoginPage extends ParentPage{
     }
 
 
+
+    @Step
+    public void checkErrorsMessages(String errorMessage)  {
+        webDriverWait15.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//*[@type ='error']")));
+        String [] errorsArray = errorMessage.split(";");
+
+        List<WebElement> actualErrorsList = webDriver.findElements(By.xpath(".//*[@type ='error']"));
+
+        Assert.assertEquals("Number os Messages", errorsArray.length, actualErrorsList.size());
+        SoftAssertions softAssertions = new SoftAssertions();
+        ArrayList <String > textFromErrors = new ArrayList<>();
+        for (WebElement element : actualErrorsList){
+            textFromErrors.add(element.getText());
+        }
+
+        for (int i = 0; i < errorsArray.length; i++) {
+            softAssertions.assertThat(errorsArray[i]).isIn(textFromErrors);
+        }
+        softAssertions.assertAll();
+
+
+    }
 }

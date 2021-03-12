@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -27,12 +28,14 @@ public class PricingPage extends ParentPage{
         return null;
     }
 
+    @Step
     public PricingPage checkIsRedirectToPricingPage(){
         //webDriverWait10.until(ExpectedConditions.visibilityOfAllElementsLocatedBy((By) mainMenu));
         Assert.assertThat("Invalid Page",webDriver.getCurrentUrl(), containsString(getRelativeUrl()));
         return this;
     }
 
+    @Step
     public void checkRedirectionInBasicPlan(){
         clickOnElement(basicPlan);
     }

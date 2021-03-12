@@ -1,6 +1,7 @@
 package loginTest;
 
 import baseTest.BaseTest;
+import io.qameta.allure.*;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import junitparams.naming.TestCaseName;
@@ -10,13 +11,21 @@ import org.junit.runner.RunWith;
 import pages.LoginPage;
 
 @RunWith(JUnitParamsRunner.class)
+@Epic("Allure examples")
+@Feature("Junit 4 support")
 public class LoginTest extends BaseTest {
     final String VALID_USER_EMAIL = "qtfreelancezh+aqa1@gmail.com";
     final String VALID_USER_PASS = "AQATestUser";
     final String INVALID_USER_EMAIL = "qtfreelancezh+aqa1.gmail.com";
     final String INVALID_USER_PASS = "AQA";
 
-
+    @Description("Some detailed test description")
+    @Story("Base support for bdd annotations")
+    @Link("https://example.org")
+    @Link(name = "allure", type = "mylink")
+    @Issue("123")
+    @Issue("432")
+    @Severity(SeverityLevel.CRITICAL)
     @Test
     public void loggerCheck(){
         loginPage.openLoginPage();
