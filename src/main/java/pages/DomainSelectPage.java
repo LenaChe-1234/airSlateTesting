@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -30,6 +31,7 @@ public class DomainSelectPage extends ParentPage{
         return "my.";
     }
 
+    @Step
     public DomainSelectPage checkIsRedirectedToDomainSelectPage() {
         webDriverWait15.until(ExpectedConditions.visibilityOf(buttonCreateNewWorkspace));
     Assert.assertEquals("The domain-select page was loaded", "https://my.airslate-dev07.xyz/domain-select", webDriver.getCurrentUrl());
@@ -37,10 +39,12 @@ public class DomainSelectPage extends ParentPage{
        return this;
     }
 
+    @Step
     public void selectDomainName(){
         webDriver.findElement((By) linkedDomainName).click();
     }
 
+    @Step
     public WorkspacePage loadWorkspace(){
         clickOnElement(workspaceLocator);
         logger.info(" The page " + webDriver.getTitle() + " was loaded");

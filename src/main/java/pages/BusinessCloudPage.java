@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -23,6 +24,7 @@ public class BusinessCloudPage extends ParentPage{
         return null;
     }
 
+    @Step
     public BusinessCloudPage checkIsRedirectToBusinessCloudPage(){
         //webDriverWait10.until(ExpectedConditions.visibilityOfAllElementsLocatedBy((By) mainMenu));
         Assert.assertThat("Invalid Page",webDriver.getCurrentUrl(), containsString(getRelativeUrl()));

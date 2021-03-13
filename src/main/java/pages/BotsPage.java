@@ -15,6 +15,6 @@ public class BotsPage extends ParentPage{
 
     @Override
     String getFirstPartOfRelativeUrl() {
-        return null;
+        return "";
     }
 }
